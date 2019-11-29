@@ -1,45 +1,48 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Holiday_Home.Models;
 
 namespace Holiday_Home.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/holidayhome")]
     [ApiController]
     public class HolidayHomeController : ControllerBase
     {
-        // GET api/values
+        private readonly HolidayContext _context;
+
+        public HolidayHomeController(HolidayContext context)
+        {
+            _context = context;
+
+            //Since it uses InMemoryDatabase, there is no data from the start
+            if (_context.HolidayHomes.Count() == 0)
+            {
+                _context.HolidayHomes.Add(new HolidayHome { Address = "Finca el Pato, 29004 Málaga, Spanien", RentalPrice = 550 });
+                _context.SaveChanges();
+            }
+        }
+
+
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<HolidayHome>>> GetHolidayHomes()
         {
-            return new string[] { "value1", "value2" };
+            return await _context.HolidayHomes.ToListAsync();
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<ActionResult<HolidayHome>> GetHolidayHome(int id)
         {
-            return "value";
-        }
+            var holidayHome = await _context.HolidayHomes.FindAsync(id);
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+            if (holidayHome == null)
+            {
+                return NotFound();
+            }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return holidayHome;
         }
     }
 }

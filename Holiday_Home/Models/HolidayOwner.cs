@@ -7,7 +7,7 @@ namespace Holiday_Home.Models
 {
     public class HolidayOwner
     {
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string Name { get; set; }
 
     }
