@@ -8,7 +8,7 @@ namespace Holiday_Home.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class HolidayHomeController : ControllerBase
     {
         // GET api/values
         [HttpGet]
