@@ -44,5 +44,14 @@ namespace Holiday_Home.Controllers
 
             return holidayHome;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<HolidayHome>> PostHolidayHome(HolidayHome hHome)
+        {
+            _context.HolidayHomes.Add(hHome);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetHolidayHome), new { id = hHome.Id }, hHome);
+        }
     }
 }

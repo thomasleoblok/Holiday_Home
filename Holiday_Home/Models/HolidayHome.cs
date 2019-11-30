@@ -7,8 +7,9 @@ namespace Holiday_Home.Models
 {
     public class HolidayHome
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string Address { get; set; }
         public double RentalPrice { get; set; }
+        public int HomeOwnerId { get; set; }
     }
 }
