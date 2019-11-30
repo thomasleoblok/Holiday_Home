@@ -53,5 +53,19 @@ namespace Holiday_Home.Controllers
 
             return CreatedAtAction(nameof(GetHolidayHome), new { id = hHome.Id }, hHome);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutHolidayHome(int id, HolidayHome hHome)
+        {
+            if (id != hHome.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(hHome).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
