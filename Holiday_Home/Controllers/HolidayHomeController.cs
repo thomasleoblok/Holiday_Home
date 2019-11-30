@@ -65,7 +65,23 @@ namespace Holiday_Home.Controllers
             _context.Entry(hHome).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHolidayHome(int id)
+        {
+            var holidayHome = await _context.HolidayHomes.FindAsync(id);
+
+            if (holidayHome == null)
+            {
+                return NotFound();
+            }
+
+            _context.HolidayHomes.Remove(holidayHome);
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
