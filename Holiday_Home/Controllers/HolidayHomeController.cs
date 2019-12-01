@@ -20,7 +20,7 @@ namespace Holiday_Home.Controllers
             //Since it uses InMemoryDatabase, there is no data from the start, therefore 1 instance is created
             if (_context.HolidayHomes.Count() == 0)
             {
-                _context.HolidayHomes.Add(new HolidayHome { Address = "Finca el Pato, 29004 Málaga, Spanien", RentalPrice = 550 });
+                _context.HolidayHomes.AddRange(new HolidayHome { Address = "Finca el Pato, 29004 Málaga, Spanien", RentalPrice = 550 }, new HolidayHome { Address = "Sdr Almstokvej, 6623 Vorbasse", RentalPrice = 400 });
                 _context.SaveChanges();
             }
         }
@@ -49,6 +49,12 @@ namespace Holiday_Home.Controllers
         public async Task<ActionResult<HolidayHome>> PostHolidayHome(HolidayHome hHome)
         {
             _context.HolidayHomes.Add(hHome);
+
+            if (!await _context.HolidayOwners.AnyAsync(h => h.Id == hHome.HomeOwnerId))
+            {
+                return Content("Holiday Home Owner does not exist");
+            }
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetHolidayHome), new { id = hHome.Id }, hHome);
