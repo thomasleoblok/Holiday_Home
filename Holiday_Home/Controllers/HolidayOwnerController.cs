@@ -45,23 +45,21 @@ namespace Holiday_Home.Controllers
         }
 
         // /api/holidayowner/getHomes/1
-        [HttpGet("{homeownerid}")]
-        [Route("getHomes/{id}")]
-        public async Task<ActionResult<IEnumerable<HolidayHome>>> GetHolidayOwnerHomes(int id)
+        [HttpGet("{id}")]
+        [Route("getHomes/{id}/{page}")]
+        public async Task<ActionResult<IEnumerable<HolidayHome>>> GetHolidayOwnerHomes(int id, int page)
         {
             var holidayHomes = await _context.HolidayHomes.
                 Where(hHome => hHome.HomeOwnerId == id).
                 ToListAsync();
-
-            //List should only consist of 5 elements
-            holidayHomes.RemoveRange(5, holidayHomes.Count - 5);
 
             if (holidayHomes == null)
             {
                 return NotFound();
             }
 
-            return holidayHomes;
+            //Page should only consist of 5 elements
+            return holidayHomes.Skip(5 * page).Take(5).ToList();
         }
 
         [HttpPost]
