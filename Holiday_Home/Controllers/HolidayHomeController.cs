@@ -17,7 +17,7 @@ namespace Holiday_Home.Controllers
         {
             _context = context;
 
-            //Since it uses InMemoryDatabase, there is no data from the start
+            //Since it uses InMemoryDatabase, there is no data from the start, therefore 1 instance is created
             if (_context.HolidayHomes.Count() == 0)
             {
                 _context.HolidayHomes.Add(new HolidayHome { Address = "Finca el Pato, 29004 Málaga, Spanien", RentalPrice = 550 });
