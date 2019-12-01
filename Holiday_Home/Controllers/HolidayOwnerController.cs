@@ -53,6 +53,9 @@ namespace Holiday_Home.Controllers
                 Where(hHome => hHome.HomeOwnerId == id).
                 ToListAsync();
 
+            //List should only consist of 5 elements
+            holidayHomes.RemoveRange(5, holidayHomes.Count - 5);
+
             if (holidayHomes == null)
             {
                 return NotFound();
