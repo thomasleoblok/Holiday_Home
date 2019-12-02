@@ -44,7 +44,7 @@ namespace Holiday_Home.Controllers
             return holidayOwner;
         }
 
-        // /api/holidayowner/getHomes/1
+        // /api/holidayowner/getHomes/1/0
         [HttpGet("{id}")]
         [Route("getHomes/{id}/{page}")]
         public async Task<ActionResult<IEnumerable<HolidayHome>>> GetHolidayOwnerHomes(int id, int page)
@@ -59,6 +59,7 @@ namespace Holiday_Home.Controllers
             }
 
             //Page should only consist of 5 elements
+            //Page starts at 0
             return holidayHomes.Skip(5 * page).Take(5).ToList();
         }
 
