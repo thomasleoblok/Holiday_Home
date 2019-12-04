@@ -48,13 +48,13 @@ namespace Holiday_Home.Controllers
         [HttpPost]
         public async Task<ActionResult<HolidayHome>> PostHolidayHome(HolidayHome hHome)
         {
-            _context.HolidayHomes.Add(hHome);
-
+            //Checks if the Home owner doesn't exits
             if (!await _context.HolidayOwners.AnyAsync(h => h.Id == hHome.HomeOwnerId))
             {
                 return Content("Holiday Home Owner does not exist");
             }
 
+            _context.HolidayHomes.Add(hHome);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetHolidayHome), new { id = hHome.Id }, hHome);
