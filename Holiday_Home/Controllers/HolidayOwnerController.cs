@@ -17,7 +17,7 @@ namespace Holiday_Home.Controllers
         {
             _context = context;
 
-            //Since it uses InMemoryDatabase, there is no data from the start, therefore 1 instance is created
+            //Since it uses InMemoryDatabase, there is no data from the start, therefore data is created
             if (_context.HolidayOwners.Count() == 0)
             {
                 _context.HolidayOwners.AddRange(new HolidayOwner { Name = "Thomas" }, new HolidayOwner { Name = "Peter" });

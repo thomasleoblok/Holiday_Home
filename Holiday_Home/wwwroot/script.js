@@ -2,7 +2,7 @@ const holidayhomeUri = "api/holidayhome";
 let holidayhomes = null;
 
 $(document).ready(function() {
-  getData();
+  getHolidayhomeData();
 });
 
 function getHolidayhomeCount(data) {
@@ -31,34 +31,34 @@ function getHolidayhomeData() {
 
       $.each(data, function(key, item) {
         const tr = $("<tr></tr>")
-          .append($("<td></td>").text(item.Address))
+          .append($("<td></td>").text(item.address))
           .append(
             $("<td></td>").append(
               $("<button>Edit</button>").on("click", function() {
-                editItem(item.Id);
+                editItem(item.id);
               })
             )
           )
-          .append($("<td></td>").text(item.RentalPrice))
+          .append($("<td></td>").text(item.rentalPrice))
           .append(
             $("<td></td>").append(
               $("<button>Edit</button>").on("click", function() {
-                editItem(item.Id);
+                editItem(item.id);
               })
             )
           )
-          .append($("<td></td>").text(item.HomeOwnerId))
+          .append($("<td></td>").text(item.homeOwnerid))
           .append(
             $("<td></td>").append(
               $("<button>Edit</button>").on("click", function() {
-                editItem(item.Id);
+                editItem(item.id);
               })
             )
           )
           .append(
             $("<td></td>").append(
               $("<button>Delete</button>").on("click", function() {
-                deleteItem(item.Id);
+                deleteItem(item.id);
               })
             )
           );
@@ -73,9 +73,9 @@ function getHolidayhomeData() {
 
 function addItem() {
   const item = {
-    Address: $("#add-address").val(),
-    RentalPrice: $("#add-price").val(),
-    HomeOwnerId: $("#add-owner").val(),
+    address: $("#add-address").val(),
+    rentalPrice: $("#add-price").val(),
+    homeOwnerid: $("#add-owner").val(),
   };
 
   $.ajax({
@@ -88,15 +88,15 @@ function addItem() {
       alert("Something went wrong!");
     },
     success: function(result) {
-      getData();
+      getHolidayhomeData();
       $("#add-address").val("");
     }
   });
 }
 
-function deleteItem(Id) {
+function deleteItem(id) {
   $.ajax({
-    url: holidayhomeUri + "/" + Id,
+    url: holidayhomeUri + "/" + id,
     type: "DELETE",
     success: function(result) {
       getHolidayhomeData();
@@ -106,10 +106,10 @@ function deleteItem(Id) {
 
 function editItem(id) {
   $.each(holidayhomes, function(key, item) {
-    if (item.Id === Id) {
-      $("#edit-address").val(item.Address);
-      $("#edit-price").val(item.RentalPrice);
-      $("#edit-owner").val(item.HomeOwnerId);
+    if (item.id === id) {
+      $("#edit-address").val(item.address);
+      $("#edit-price").val(item.rentalPrice);
+      $("#edit-owner").val(item.homeOwnerid);
     }
   });
   $("#spoiler").css({ display: "block" });
@@ -117,9 +117,9 @@ function editItem(id) {
 
 $(".my-form").on("submit", function() {
   const item = {
-    Address: $("#edit-address").val(),
-    RentalPrice: $("#edit-price").val(),
-    HomeOwnerId: $("#edit-owner").val()
+    address: $("#edit-address").val(),
+    rentalPrice: $("#edit-price").val(),
+    homeOwnerid: $("#edit-owner").val()
   };
 
   $.ajax({
@@ -129,7 +129,7 @@ $(".my-form").on("submit", function() {
     contentType: "application/json",
     data: JSON.stringify(item),
     success: function(result) {
-      getData();
+      getHolidayhomeData();
     }
   });
 
