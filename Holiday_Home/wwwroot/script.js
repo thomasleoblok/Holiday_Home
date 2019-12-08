@@ -1,7 +1,12 @@
 const holidayhomeUri = "api/holidayhome";
 let holidayhomes = null;
 
-$(document).ready(function() {
+$(document).ready(function () {
+  $.ajax({
+    type: "GET",
+      url: "api/holidayowner"
+    })
+
   getHolidayhomeData();
 });
 
