@@ -31,23 +31,10 @@ function getHolidayhomeData() {
 
       $.each(data, function(key, item) {
         const tr = $("<tr></tr>")
+          .append($("<td></td>").text(item.id))
           .append($("<td></td>").text(item.address))
-          .append(
-            $("<td></td>").append(
-              $("<button>Edit</button>").on("click", function() {
-                editItem(item.id);
-              })
-            )
-          )
           .append($("<td></td>").text(item.rentalPrice))
-          .append(
-            $("<td></td>").append(
-              $("<button>Edit</button>").on("click", function() {
-                editItem(item.id);
-              })
-            )
-          )
-          .append($("<td></td>").text(item.homeOwnerid))
+          .append($("<td></td>").text(item.homeOwnerId))
           .append(
             $("<td></td>").append(
               $("<button>Edit</button>").on("click", function() {
@@ -75,7 +62,7 @@ function addItem() {
   const item = {
     address: $("#add-address").val(),
     rentalPrice: $("#add-price").val(),
-    homeOwnerid: $("#add-owner").val(),
+    homeOwnerId: $("#add-owner").val(),
   };
 
   $.ajax({
@@ -90,6 +77,8 @@ function addItem() {
     success: function(result) {
       getHolidayhomeData();
       $("#add-address").val("");
+      $("#add-price").val("");
+      $("#add-owner").val("");
     }
   });
 }
@@ -107,9 +96,10 @@ function deleteItem(id) {
 function editItem(id) {
   $.each(holidayhomes, function(key, item) {
     if (item.id === id) {
+      $("#edit-id").val(item.id);
       $("#edit-address").val(item.address);
       $("#edit-price").val(item.rentalPrice);
-      $("#edit-owner").val(item.homeOwnerid);
+      $("#edit-owner").val(item.homeOwnerId);
     }
   });
   $("#spoiler").css({ display: "block" });
@@ -119,7 +109,8 @@ $(".my-form").on("submit", function() {
   const item = {
     address: $("#edit-address").val(),
     rentalPrice: $("#edit-price").val(),
-    homeOwnerid: $("#edit-owner").val()
+    homeOwnerId: $("#edit-owner").val(),
+    id: $("#edit-id").val()
   };
 
   $.ajax({
